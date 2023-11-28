@@ -11,6 +11,11 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         transport: Transport.TCP,
         options: { port: 3001 },
       },
+      {
+        name: 'ms-analytics',
+        transport: Transport.TCP,
+        options: { port: 3005 },
+      },
     ]),
   ],
   controllers: [AppController],

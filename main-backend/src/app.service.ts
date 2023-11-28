@@ -6,6 +6,7 @@ import { CreateUser } from './dto/createUser.dto';
 export class AppService {
   constructor(
     @Inject('ms-communication') private communicationClient: ClientProxy,
+    @Inject('ms-analytics') private analyticsClient: ClientProxy,
   ) {}
 
   private user: CreateUser[] = [];
@@ -16,7 +17,11 @@ export class AppService {
 
   createUser(data: CreateUser) {
     this.user.push(data);
+    this.analyticsClient.emit('createUser', data.email);
     this.communicationClient.emit('createUser', data.email);
-    console.log(data.email);
+  }
+
+  getAnalytics() {
+    return this.analyticsClient.send({ cmd: 'get_analytics' }, {});
   }
 }
